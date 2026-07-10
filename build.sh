@@ -25,6 +25,12 @@ if ! command -v cmake &> /dev/null; then
     exit 1
 fi
 
+# Проверяем тулчейн
+if [ ! -f "$ANDROID_NDK_HOME/build/cmake/android.cmake" ]; then
+    echo "❌ Toolchain file not found: $ANDROID_NDK_HOME/build/cmake/android.cmake"
+    exit 1
+fi
+
 echo "✅ NDK: $ANDROID_NDK_HOME"
 echo "✅ CMake version: $(cmake --version | head -n 1)"
 
