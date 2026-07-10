@@ -30,7 +30,7 @@ jobs:
           ./build.sh ${{ github.event.inputs.package }}
 
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Zygisk-Il2CppDumper
           path: Zygisk-Il2CppDumper.zip
