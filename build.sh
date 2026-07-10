@@ -2,6 +2,7 @@
 
 # Настройки
 MODULE_NAME="Zygisk-Il2CppDumper"
+LIB_NAME="il2cppdumper"
 PACKAGE_NAME="${1:-com.example.game}"
 MIN_SDK=21
 
@@ -32,14 +33,15 @@ for ABI in arm64-v8a armeabi-v7a; do
         -DANDROID_ABI="$ABI" \
         -DANDROID_PLATFORM="android-$MIN_SDK" \
         -DANDROID_STL=c++_shared \
+        -DMODULE_NAME="$LIB_NAME" \
         ../../src/main/cpp
     
     cmake --build . --config Release
     
-    if [ -f "libil2cppdumper.so" ]; then
-        echo "✅ Built libil2cppdumper.so for $ABI"
+    if [ -f "lib${LIB_NAME}.so" ]; then
+        echo "✅ Built lib${LIB_NAME}.so for $ABI"
     else
-        echo "⚠️  libil2cppdumper.so not found for $ABI"
+        echo "⚠️  lib${LIB_NAME}.so not found for $ABI"
     fi
     
     cd ..
@@ -54,13 +56,13 @@ mkdir -p module/system/lib
 mkdir -p module/META-INF/com/google/android
 
 # Копируем .so файлы
-if [ -f "build/build_arm64-v8a/libil2cppdumper.so" ]; then
-    cp build/build_arm64-v8a/libil2cppdumper.so module/system/lib64/
+if [ -f "build/build_arm64-v8a/lib${LIB_NAME}.so" ]; then
+    cp "build/build_arm64-v8a/lib${LIB_NAME}.so" module/system/lib64/
     echo "✅ Copied arm64-v8a .so"
 fi
 
-if [ -f "build/build_armeabi-v7a/libil2cppdumper.so" ]; then
-    cp build/build_armeabi-v7a/libil2cppdumper.so module/system/lib/
+if [ -f "build/build_armeabi-v7a/lib${LIB_NAME}.so" ]; then
+    cp "build/build_armeabi-v7a/lib${LIB_NAME}.so" module/system/lib/
     echo "✅ Copied armeabi-v7a .so"
 fi
 
