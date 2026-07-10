@@ -33,8 +33,8 @@ mkdir -p build
 cd build
 
 echo "📁 Changed to build directory: $(pwd)"
-echo "📂 Contents of src/main/cpp:"
-ls -la ../../src/main/cpp/
+echo "📂 Contents of module/src/main/cpp:"
+ls -la ../module/src/main/cpp/
 
 # CMake конфиг для каждой архитектуры
 for ABI in arm64-v8a armeabi-v7a; do
@@ -55,7 +55,7 @@ for ABI in arm64-v8a armeabi-v7a; do
         -DANDROID_PLATFORM="android-$MIN_SDK" \
         -DANDROID_STL=c++_shared \
         -DMODULE_NAME="$LIB_NAME" \
-        ../../src/main/cpp
+        ../../module/src/main/cpp
     
     echo "📂 CMake output:"
     ls -la
